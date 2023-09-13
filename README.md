@@ -2,7 +2,7 @@
 **Project Owner:**
 **Project Manager:** Jayce Lee
 **Document Owner:**
-**Scrum Master:**
+**Scrum Master:** Tyler Dunning
 
 ===
 
