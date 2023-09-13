@@ -1,7 +1,7 @@
 # STUDENT STASH
 **Project Owner:**
 **Project Manager:** Jayce Lee
-**Document Owner:**
+**Document Owner:** Andy Nguyen
 **Scrum Master:** Tyler Dunning
 
 ===
