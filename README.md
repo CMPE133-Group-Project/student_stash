@@ -1,4 +1,10 @@
-# student_stash
+# STUDENT STASH
+**Project Owner:**
+**Project Manager:** Jayce Lee
+**Document Owner:**
+**Scrum Master:**
+
+===
 
 A new Flutter project.
 
