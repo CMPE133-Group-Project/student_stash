@@ -1,6 +1,6 @@
 # STUDENT STASH
 
-**Project Owner:**
+**Project Owner:** Hasnain Mucklai
 
 **Project Manager:** Jayce Lee
 
