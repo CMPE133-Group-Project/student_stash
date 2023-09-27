@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+// Pages
+import 'login.dart';
+
+// Widgets
+import 'appbar.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,8 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: HomePage(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginPage(),
+      },
     );
   }
 }
@@ -22,7 +32,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState
-    extends State<HomePage> {
+  extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -36,15 +46,11 @@ class _HomePageState
       style: optionStyle,
     ),
     Text(
-      'Index 2: Search',
+      'Index 2: Sell',
       style: optionStyle,
     ),
     Text(
-      'Index 3: Sell',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Chat',
+      'Index 3: Chat',
       style: optionStyle,
     ),
   ];
@@ -58,11 +64,7 @@ class _HomePageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('STUDENT STASH'),
-        backgroundColor: Colors.indigo,
-        centerTitle: true,
-      ),
+      appBar: myAppBar(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -76,11 +78,6 @@ class _HomePageState
           BottomNavigationBarItem(
             icon: Icon(Icons.shop),
             label: 'Shop',
-            backgroundColor: Colors.indigo,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
             backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
