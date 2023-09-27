@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 
+class Sell extends StatelessWidget {
+  const Sell({Key? key}) : super(key: key);
 
-const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-Widget sellView() {
-  return const Text(
-    'Index 2: Sell',
-    style: optionStyle,
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Center(
+        child: Text(
+          "Sell Page",
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
 }

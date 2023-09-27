@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
-const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-Widget homeView() {
-  return const Text(
-    'Index 0: Home',
-    style: optionStyle,
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Center(
+        child: Text(
+          "Home Page",
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
 }

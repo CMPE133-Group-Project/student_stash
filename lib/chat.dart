@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 
+class Chat extends StatelessWidget {
+  const Chat({Key? key}) : super(key: key);
 
-const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-Widget chatView() {
-  return const Text(
-    'Index 3: Chat',
-    style: optionStyle,
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Center(
+        child: Text(
+          "Chat Page",
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
 }

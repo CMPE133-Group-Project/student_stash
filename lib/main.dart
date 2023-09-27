@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: const HomePage(),
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
@@ -42,10 +42,10 @@ class _HomePageState
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    homeView(),
-    shopView(),
-    sellView(),
-    chatView(),
+    const Home(),
+    const Shop(),
+    const Sell(),
+    const Chat(),
   ];
 
   void _onItemTapped(int index) {
