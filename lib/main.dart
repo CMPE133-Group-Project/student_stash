@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 // Pages
 import 'login.dart';
 
+// Views
+import 'home.dart';
+import 'shop.dart';
+import 'sell.dart';
+import 'chat.dart';
+
 // Widgets
 import 'appbar.dart';
 
@@ -34,25 +40,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState
   extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Shop',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Sell',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Chat',
-      style: optionStyle,
-    ),
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static final List<Widget> _widgetOptions = <Widget>[
+    homeView(),
+    shopView(),
+    sellView(),
+    chatView(),
   ];
 
   void _onItemTapped(int index) {
