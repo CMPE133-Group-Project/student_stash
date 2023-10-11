@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 
 // Views
-import 'home.dart';
 import 'shop.dart';
 import 'sell.dart';
 import 'chat.dart';
@@ -42,7 +41,6 @@ class _HomePageState
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    const Home(),
     const Shop(),
     const Sell(),
     const Chat(),
@@ -62,26 +60,19 @@ class _HomePageState
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.indigo,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.indigo,
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shop),
             label: 'Shop',
-            backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.sell),
             label: 'Sell',
-            backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: 'Chat',
-            backgroundColor: Colors.indigo,
           ),
         ],
         currentIndex: _selectedIndex,
