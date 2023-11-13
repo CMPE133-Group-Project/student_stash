@@ -1,13 +1,11 @@
-class CurrentSession{
+class CurrentSession {
   static String currentName = "";
 
-
-  static void setCurrentName(String x){
+  static void setCurrentName(String x) {
     currentName = x;
   }
 
-  static String getCurrentName()
-  {
+  static String getCurrentName() {
     return currentName;
   }
 }
