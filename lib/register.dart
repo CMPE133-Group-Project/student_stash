@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_stash/main.dart';
 import 'db_operations.dart';
-import 'current_session.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override

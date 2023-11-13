@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert'; // Import this for utf8.encode
 import 'dart:typed_data';
 import 'current_session.dart';
@@ -79,7 +78,6 @@ class DbOperations {
   static Future<bool> uploadListing(
       XFile? image, String name, String desc) async {
     String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
-
     Reference storageRef =
         FirebaseStorage.instance.ref().child("listings/$uniqueName");
 
@@ -92,12 +90,21 @@ class DbOperations {
       await uploadTextToFirebaseStorage(
           "$allListings$uniqueName;", "currentListings.txt");
 
+      try {
+        String userListings = await readFromFile('userListings/uploads.txt');
+        await uploadTextToFirebaseStorage("$userListings$uniqueName;",
+            "userListings/${CurrentSession.getCurrentName()}/uploads.txt");
+      } catch (e) {
+        await uploadTextToFirebaseStorage("$uniqueName;",
+            "userListings/${CurrentSession.getCurrentName()}/uploads.txt");
+      }
+
       print("Success uploading listing");
       return true;
     } catch (e) {
       print(e);
     }
-    return Future.value(false);
+    return false;
   }
 
   static Future<List<List>> retreiveListings() async {
@@ -112,15 +119,105 @@ class DbOperations {
       allListings = allListings.substring(index + 1);
 
       var temp = [];
-      temp.add(await readFromFile("listings/$curString/itemName"));
-      temp.add(await readFromFile("listings/$curString/itemDesc"));
-      temp.add(await storageRef.child("$curString/image").getDownloadURL());
+      try {
+        temp.add(curString);
+        temp.add(await readFromFile("listings/$curString/itemName"));
+        temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await storageRef.child("$curString/image").getDownloadURL());
+
+        res.add(temp);
+      } catch (e) {
+        print("Value no longer exists");
+      }
+    }
+
+    return res;
+  }
+
+  static Future<List<List>> retreiveUserListings() async {
+    List<List> res = [];
+    String allListings = "";
+    try {
+      allListings = await readFromFile(
+          'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+    } catch (e) {
+      return res;
+    }
+
+    final storageRef = FirebaseStorage.instance.ref().child("listings");
+
+    String curString = '';
+    while (allListings != "") {
+      int index = allListings.indexOf(';');
+      curString = allListings.substring(0, index);
+      allListings = allListings.substring(index + 1);
+
+      var temp = [];
+      try {
+        temp.add(curString);
+        temp.add(await readFromFile("listings/$curString/itemName"));
+        temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await storageRef.child("$curString/image").getDownloadURL());
+
+        res.add(temp);
+      } catch (e) {
+        return res;
+      }
+    }
+
+    return res;
+  }
+
+  static Future<void> removeListing(String listingID) async {
+    final storageRef =
+        FirebaseStorage.instance.ref().child("listings/$listingID");
+    await storageRef.delete();
+  }
+
+  static Future<void> sendMessage(String listingID, String content) async {
+    //Name, Content, Time
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child("chats/$listingID/${CurrentSession.getCurrentName()}");
+
+    try {
+      String currentMessages = await readFromFile(
+          'chats/$listingID/${CurrentSession.getCurrentName()}');
+      await uploadTextToFirebaseStorage(
+          "$currentMessages${CurrentSession.getCurrentName()};$content;${DateTime.now()};",
+          "chats/$listingID/${CurrentSession.getCurrentName()}");
+    } catch (e) {
+      await uploadTextToFirebaseStorage(
+          "${CurrentSession.getCurrentName()};$content;${DateTime.now()};",
+          "chats/$listingID/${CurrentSession.getCurrentName()}");
+    }
+  }
+
+  static Future<List<List>> readMessages(
+      String listingID, String userID) async {
+    List<List> res = [];
+    String messages = await readFromFile("chats/$listingID/$userID");
+
+    while (messages != "") {
+      var temp = [];
+
+      int index = messages.indexOf(';');
+      String curString = messages.substring(0, index);
+      messages = messages.substring(index + 1);
+      temp.add(curString);
+
+      index = messages.indexOf(';');
+      curString = messages.substring(0, index);
+      messages = messages.substring(index + 1);
+      temp.add(curString);
+
+      index = messages.indexOf(';');
+      curString = messages.substring(0, index);
+      messages = messages.substring(index + 1);
+      temp.add(curString);
 
       res.add(temp);
     }
-
-    print(curString);
-    print(allListings);
 
     return res;
   }
