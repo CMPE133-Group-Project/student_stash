@@ -27,13 +27,15 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Center(
               child: Text(
-                'Student', // First line
+                'STUDENT STASH', // First line
                 style: TextStyle(
-                  fontSize: 64.0, // Increase the font size
+                  fontSize: 45.0, // Increase the font size
                   fontWeight: FontWeight.bold, // Make it bold
+                  color: Colors.white,
                 ),
               ),
             ),
+            /*
             const Center(
               child: Text(
                 'Stash', // Second line
@@ -43,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+            */
             const SizedBox(height: 16.0),
             TextField(
               controller: emailController,
@@ -71,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Otherwise, show an error message
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
+                primary: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
@@ -85,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
+                primary: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),

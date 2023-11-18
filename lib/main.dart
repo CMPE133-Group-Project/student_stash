@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Pages
 import 'login.dart';
@@ -24,6 +25,30 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
       },
+      theme: ThemeData(
+        useMaterial3: true,
+
+        // Define the default brightness and colors.
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          // ···
+          brightness: Brightness.light,
+        ),
+
+        // Define the default `TextTheme`. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.bold,
+          ),
+          titleLarge: GoogleFonts.righteous(
+            fontSize: 30,
+          ),
+          bodyMedium: GoogleFonts.righteous(),
+          displaySmall: GoogleFonts.righteous(),
+        ),
+      ),
     );
   }
 }
