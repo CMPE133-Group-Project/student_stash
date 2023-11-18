@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "316033620599",
+    "project_id": "studentstash-a0868",
+    "storage_bucket": "studentstash-a0868.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316033620599:android:e625752de6a846325a8472",
+        "android_client_info": {
+          "package_name": "com.example.student_stash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316033620599-mn5m24rds7rskidgc9sukhagns403mvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBNd9E1dlpilFyhsvOJlgpaa9MUe2Xt64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316033620599-mn5m24rds7rskidgc9sukhagns403mvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "316033620599-4vt627bmstfb9cii1ougnt1megs8tjgb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.studentStash.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316033620599:android:d4dd3b0bcb65eebd5a8472",
+        "android_client_info": {
+          "package_name": "com.google.firebase.presents.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316033620599-mn5m24rds7rskidgc9sukhagns403mvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBNd9E1dlpilFyhsvOJlgpaa9MUe2Xt64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316033620599-mn5m24rds7rskidgc9sukhagns403mvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "316033620599-4vt627bmstfb9cii1ougnt1megs8tjgb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.studentStash.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

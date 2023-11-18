@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:student_stash/main.dart';
+import 'db_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -39,9 +41,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Add your registration logic here
                 // Validate inputs, check if passwords match, and create the user account
+                if (await DbOperations.createAccount(
+                    emailController.text, confirmPasswordController.text)) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ));
+                }
               },
               child: const Text('Register'),
             ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:student_stash/main.dart';
 import 'register.dart';
+import 'db_operations.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
           'Login',
           style: TextStyle(color: Colors.white),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,16 +70,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Add your authentication logic here
                 // For example, check if email and password are correct
                 // If successful, navigate to the home page
                 // Otherwise, show an error message
+                if (await DbOperations.verifyLogin(
+                    emailController.text, passwordController.text)) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ));
+                }
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               child: const Text('Login'),
             ),
@@ -90,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               child: const Text('Create Account'),
             ),
