@@ -1,96 +1,117 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart'; // Import your login page file
+import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+//Firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// Pages
+import 'login.dart';
+
+// Views
+import 'shop.dart';
+import 'sell.dart';
+import 'chat.dart';
+
+// Widgets
+import 'appbar.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
+      home: const HomePage(),
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
-
       },
-      home: Scaffold(
+      theme: ThemeData(
+        useMaterial3: true,
 
-        appBar: AppBar(
+        // Define the default brightness and colors.
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          // ···
+          brightness: Brightness.light,
+        ),
 
-          centerTitle: true,
-          backgroundColor: Colors.indigo,
-          title: const Text('STUDENT STASH'),
-
-          leading: GestureDetector(
-            onTap: () {},
-            child: Icon(Icons.menu,),
+        // Define the default `TextTheme`. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.bold,
           ),
-
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon( Icons.person, ),
-              )
-            )
-          ]
-
+          titleLarge: GoogleFonts.righteous(
+            fontSize: 30,
+          ),
+          bodyMedium: GoogleFonts.righteous(),
+          displaySmall: GoogleFonts.righteous(),
         ),
+      ),
+    );
+  }
+}
 
-        bottomNavigationBar: BottomNavigationBar(
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-          items: const <BottomNavigationBarItem>[
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Shop(),
+    const Sell(),
+    const Chat(),
+  ];
 
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
-              label: 'Shop',
-            ),
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-
-            BottomNavigationBarItem(
-              icon: Icon(Icons.sell),
-              label: 'Sell',
-            ),
-
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chat',
-            ),
-
-          ],
-
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          backgroundColor: Colors.indigo,
-        ),
-
-        body: Column(
-          children: [
-            const Center(
-              child: Padding(
-                child: Text('Hello'),
-                padding: EdgeInsets.all(10),
-              )
-
-            )
-          ]
-        ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: myAppBar(),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.indigo,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shop),
+            label: 'Shop',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sell),
+            label: 'Sell',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        onTap: _onItemTapped,
       ),
     );
   }

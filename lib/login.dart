@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'register_page.dart';
+import 'package:student_stash/main.dart';
+import 'register.dart';
+import 'db_operations.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,26 +17,29 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Login',
           style: TextStyle(color: Colors.white),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
+            const Center(
               child: Text(
-                'Student', // First line
+                'STUDENT STASH', // First line
                 style: TextStyle(
-                  fontSize: 64.0, // Increase the font size
+                  fontSize: 45.0, // Increase the font size
                   fontWeight: FontWeight.bold, // Make it bold
+                  color: Colors.white,
                 ),
               ),
             ),
-            Center(
+            /*
+            const Center(
               child: Text(
                 'Stash', // Second line
                 style: TextStyle(
@@ -43,38 +48,49 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            */
+            const SizedBox(height: 16.0),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 fillColor: Colors.white,
                 filled: true,
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 fillColor: Colors.white,
                 filled: true,
               ),
             ),
-            SizedBox(height: 32.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
-
+              onPressed: () async {
+                // Add your authentication logic here
+                // For example, check if email and password are correct
+                // If successful, navigate to the home page
+                // Otherwise, show an error message
+                if (await DbOperations.verifyLogin(
+                    emailController.text, passwordController.text)) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ));
+                }
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                textStyle: TextStyle(color: Colors.white),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                primary: Colors.white,
+                textStyle: const TextStyle(color: Colors.white),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -82,11 +98,12 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                textStyle: TextStyle(color: Colors.white),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                primary: Colors.white,
+                textStyle: const TextStyle(color: Colors.white),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: Text('Create Account'),
+              child: const Text('Create Account'),
             ),
           ],
         ),
