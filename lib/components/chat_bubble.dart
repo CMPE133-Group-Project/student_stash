@@ -12,7 +12,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var color = (owner == CurrentSession.currentName)
+    var color = (owner == CurrentSession.currentName || owner == "You")
         ? Colors.blue
         : Colors.black;
 

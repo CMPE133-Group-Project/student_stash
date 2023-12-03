@@ -80,6 +80,10 @@ class _ChatPageState extends State<ChatPage>{
       String messageContent = messageInfos[1];
       String messageTimestamp = messageInfos[2];
   
+      if (messageOwner == CurrentSession.getCurrentName()) {
+        messageOwner = "You";
+      }
+
       children.add(_buildMessageItem(messageOwner, messageContent, messageTimestamp));
     }
   
@@ -95,7 +99,7 @@ class _ChatPageState extends State<ChatPage>{
     //Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
     //align the messages to the right if the sender is the current user, otherwise to the left
-    var alignment = (owner == CurrentSession.currentName)
+    var alignment = (owner == CurrentSession.currentName || owner == "You")
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
@@ -104,10 +108,10 @@ class _ChatPageState extends State<ChatPage>{
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: (owner == CurrentSession.currentName) 
+          crossAxisAlignment: (owner == CurrentSession.currentName || owner == "You") 
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
-          mainAxisAlignment: (owner == CurrentSession.currentName)
+          mainAxisAlignment: (owner == CurrentSession.currentName || owner == "You")
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
