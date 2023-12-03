@@ -52,6 +52,7 @@ class Sell extends StatelessWidget {
 
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
 
     List<XFile> imageFiles = [];
 
@@ -70,6 +71,14 @@ class Sell extends StatelessWidget {
               TextField(
                 controller: descriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: InputDecoration(
+                  labelText: 'Price',
+                  prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
+                ),
+                keyboardType: TextInputType.number,
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -96,13 +105,12 @@ class Sell extends StatelessWidget {
               onPressed: () async {
                 String title = titleController.text;
                 String description = descriptionController.text;
+                String price = priceController.text;
 
-                // Upload images
+                // Upload for every picture, as well as the other stuff
                 for (XFile file in imageFiles) {
-                  await DbOperations.uploadListing(file, title, description);
+                  await DbOperations.uploadListing(file, title, description, price);
                 }
-
-                // You can use the user input for other backend stuff here.
                 Navigator.of(context).pop();
               },
               child: Text('Submit'),

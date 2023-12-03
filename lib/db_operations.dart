@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:convert'; // Import this for utf8.encode
+import 'dart:convert';
 import 'dart:typed_data';
 import 'current_session.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DbOperations {
-  static Future<void> uploadTextToFirebaseStorage(
-      String text, String destination) async {
+  static Future<void> uploadTextToFirebaseStorage(String text,
+      String destination) async {
     // Convert the text to bytes (UTF-8 encoding)
     final Uint8List data = Uint8List.fromList(utf8.encode(text));
 
@@ -18,7 +18,7 @@ class DbOperations {
     try {
       await storageRef.putData(
         data,
-        SettableMetadata(contentType: 'text/plain'), // Set the content type
+        SettableMetadata(contentType: 'text/plain'),
       );
 
       print('Text uploaded successfully.');
@@ -45,8 +45,8 @@ class DbOperations {
     }
   }
 
-  static Future<bool> createAccount(
-      String emailText, String passwordText) async {
+  static Future<bool> createAccount(String emailText,
+      String passwordText) async {
     try {
       await readFromFile('userinfo/$emailText');
     } on Exception catch (e) {
@@ -75,23 +75,30 @@ class DbOperations {
     return Future.value(false);
   }
 
-  static Future<bool> uploadListing(
-      XFile? image, String name, String desc) async {
-    String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
+  static Future<bool> uploadListing(XFile? image, String name, String desc,
+      String price) async {
+    String uniqueName = DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString();
     Reference storageRef =
-        FirebaseStorage.instance.ref().child("listings/$uniqueName");
+    FirebaseStorage.instance.ref().child("listings/$uniqueName");
 
     try {
       await storageRef.child("image").putFile(File(image!.path));
       await uploadTextToFirebaseStorage(name, "listings/$uniqueName/itemName");
       await uploadTextToFirebaseStorage(desc, "listings/$uniqueName/itemDesc");
+      await uploadTextToFirebaseStorage(
+          price, "listings/$uniqueName/itemPrice");
 
       String allListings = await readFromFile('currentListings.txt');
       await uploadTextToFirebaseStorage(
           "$allListings$uniqueName;", "currentListings.txt");
 
       try {
-        String userListings = await readFromFile('userListings/uploads.txt');
+        String userListings = await readFromFile(
+            'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+        print(userListings);
         await uploadTextToFirebaseStorage("$userListings$uniqueName;",
             "userListings/${CurrentSession.getCurrentName()}/uploads.txt");
       } catch (e) {
@@ -123,6 +130,7 @@ class DbOperations {
         temp.add(curString);
         temp.add(await readFromFile("listings/$curString/itemName"));
         temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await readFromFile("listings/$curString/itemPrice"));
         temp.add(await storageRef.child("$curString/image").getDownloadURL());
 
         res.add(temp);
@@ -157,6 +165,7 @@ class DbOperations {
         temp.add(curString);
         temp.add(await readFromFile("listings/$curString/itemName"));
         temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await readFromFile("listings/$curString/itemPrice"));
         temp.add(await storageRef.child("$curString/image").getDownloadURL());
 
         res.add(temp);
@@ -170,7 +179,7 @@ class DbOperations {
 
   static Future<void> removeListing(String listingID) async {
     final storageRef =
-        FirebaseStorage.instance.ref().child("listings/$listingID");
+    FirebaseStorage.instance.ref().child("listings/$listingID");
     await storageRef.delete();
   }
 
@@ -184,7 +193,8 @@ class DbOperations {
       String currentMessages = await readFromFile(
           'chats/$listingID/${CurrentSession.getCurrentName()}');
       await uploadTextToFirebaseStorage(
-          "$currentMessages${CurrentSession.getCurrentName()};$content;${DateTime.now()};",
+          "$currentMessages${CurrentSession
+              .getCurrentName()};$content;${DateTime.now()};",
           "chats/$listingID/${CurrentSession.getCurrentName()}");
     } catch (e) {
       await uploadTextToFirebaseStorage(
@@ -193,8 +203,8 @@ class DbOperations {
     }
   }
 
-  static Future<List<List>> readMessages(
-      String listingID, String userID) async {
+  static Future<List<List>> readMessages(String listingID,
+      String userID) async {
     List<List> res = [];
     String messages = await readFromFile("chats/$listingID/$userID");
 
@@ -220,5 +230,67 @@ class DbOperations {
     }
 
     return res;
+  }
+
+
+
+  //Everything I put after this point are DB operations for profile changes.
+
+
+
+  static Future<void> updateUserImage(XFile? image) async {
+    String username = CurrentSession.getCurrentName();
+
+    Reference storageRef =
+    FirebaseStorage.instance.ref().child("userDetails/$username");
+
+    try {
+      await storageRef.child("image").putFile(File(image!.path));
+    } catch (e) {
+      print("Error updating user image: $e");
+    }
+  }
+
+  static Future<void> updateUserBio(String bio) async {
+    String username = CurrentSession.getCurrentName();
+
+    try {
+      await uploadTextToFirebaseStorage(
+          bio, 'userDetails/$username/bio');
+    } catch (e) {
+      print("Error updating user bio: $e");
+    }
+  }
+
+
+  static Future<void> updateUserImageAndBio(XFile? image, String bio) async {
+    String username = CurrentSession.getCurrentName();
+
+    // Update user bio
+    await updateUserBio(bio);
+
+    // Update user profile picture
+    if (image != null) {
+      Reference storageRef = FirebaseStorage.instance.ref().child(
+          "userDetails/$username");
+      await storageRef.child("image").putFile(File(image.path));
+    }
+  }
+
+  static Future<void> changePassword(String currentPassword, String newPassword) async {
+    try {
+      String username = CurrentSession.getCurrentName();
+
+      // Verify the current password
+      if (await verifyLogin(username, currentPassword)) {
+        // Update the password in the database
+        await uploadTextToFirebaseStorage(newPassword, 'userinfo/$username');
+        print('Password changed successfully.');
+      } else {
+        print('Incorrect current password.');
+      }
+    } catch (e) {
+      print('Error changing password: $e');
+    }
   }
 }

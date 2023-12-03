@@ -71,10 +71,6 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () async {
-                // Add your authentication logic here
-                // For example, check if email and password are correct
-                // If successful, navigate to the home page
-                // Otherwise, show an error message
                 if (await DbOperations.verifyLogin(
                     emailController.text, passwordController.text)) {
                   Navigator.of(context).push(MaterialPageRoute(
