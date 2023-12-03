@@ -22,7 +22,7 @@ class Sell extends StatelessWidget {
                       await imagePicker.pickImage(source: ImageSource.gallery);
 
                   if (file != null) {
-                    DbOperations.uploadListing(file, "Testname", "TestDesc");
+                    //DbOperations.uploadListing(file, "Testname", "TestDesc");
                   }
                 },
                 child: Text('Select Picture'),

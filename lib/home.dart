@@ -18,11 +18,11 @@ class Home extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-                  List<List> l = await DbOperations.retreiveUserListings();
-                  for (int i = 0; i < l.length; i++) {
-                    List ll = l[i];
-                    print(ll[0] + " " + ll[1] + " " + ll[2].toString());
-                  }
+                  // List<List> l = await DbOperations.retreiveUserListings();
+                  // for (int i = 0; i < l.length; i++) {
+                  //   List ll = l[i];
+                  //   print(ll[0] + " " + ll[1] + " " + ll[2].toString());
+                  // }
                 },
                 child: Text('Print all'),
               ),
@@ -39,7 +39,7 @@ class Home extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await DbOperations.sendMessage("1699847552664", "Hey boss");
+                  //await DbOperations.sendMessage("1699847552664", "Hey boss");
                 },
                 child: const Text('Add Message'),
               ),

@@ -81,6 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (context) => const HomePage(),
                   ));
                 }
+
+                await fetchListingMessages();
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
