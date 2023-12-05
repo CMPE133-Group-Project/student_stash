@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-GestureDetector item_listing(title, name, price, imgURL) {
+GestureDetector item_listing(title, price, name, imgURL) {
 
   return GestureDetector (
       onTap: (){
