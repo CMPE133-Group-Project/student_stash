@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 //Firebase
 import 'package:firebase_core/firebase_core.dart';
-import 'package:student_stash/current_session.dart';
 import 'firebase_options.dart';
 import 'db_operations.dart';
 
@@ -19,10 +18,10 @@ import 'chat.dart';
 import 'appbar.dart';
 
 List<List> messages = [];
-Future<List<List>> fetchMessageOrder(String listingID, UserId) async {
+Future<List<List>> fetchMessageOrder(String listingID, userId) async {
   messages = [];
 
-  messages = await DbOperations.readMessages(listingID, UserId);
+  messages = await DbOperations.readMessages(listingID, userId);
   return messages;
 }
 
@@ -100,8 +99,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const Shop(),
     const Sell(),

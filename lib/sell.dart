@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'db_operations.dart';
 
 class Sell extends StatelessWidget {
   const Sell({Key? key}) : super(key: key);
@@ -25,12 +24,12 @@ class Sell extends StatelessWidget {
                     //DbOperations.uploadListing(file, "Testname", "TestDesc");
                   }
                 },
-                child: Text('Select Picture'),
+                child: const Text('Select Picture'),
               ),
-              SizedBox(height: 20), // Adding some space between the buttons
+              const SizedBox(height: 20), // Adding some space between the buttons
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Upload'),
+                child: const Text('Upload'),
               ),
             ],
           ),
