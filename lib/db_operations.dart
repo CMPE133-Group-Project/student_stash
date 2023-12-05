@@ -1,4 +1,5 @@
-import 'dart:collection';
+// ignore_for_file: avoid_print, unused_catch_clause
+
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -51,14 +52,14 @@ class DbOperations {
     Reference ref = FirebaseStorage.instance.ref().child(directory);
     ListResult result = await ref.listAll();
 
-    result.items.forEach((Reference reference) {
+    for (var reference in result.items) {
       String fileName = reference.name;
       // You can also get other properties like URL, metadata, etc., if needed
       // String fileUrl = await reference.getDownloadURL();
       // FullMetadata metadata = await reference.getMetadata();
 
       res.add(fileName);
-    });
+    }
     return res;
   }
 
@@ -203,7 +204,7 @@ class DbOperations {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile('userListings/${userID}/uploads.txt');
+      allListings = await readFromFile('userListings/$userID/uploads.txt');
     } catch (e) {
       return res;
     }

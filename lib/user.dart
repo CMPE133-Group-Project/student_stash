@@ -1,5 +1,3 @@
-import 'item.dart';
-
 class User {
   final String first;
   final String last;
