@@ -101,7 +101,12 @@ class Sell extends StatelessWidget {
 
                   }
                 },
-                child: Text('Upload Images'),
+                child: const Text('Select Picture'),
+              ),
+              const SizedBox(height: 20), // Adding some space between the buttons
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Upload'),
               ),
             ],
           ),
