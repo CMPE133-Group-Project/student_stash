@@ -86,7 +86,7 @@ class Sell extends StatelessWidget {
               ),
               TextField(
                 controller: priceController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Price',
                   prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
                 ),

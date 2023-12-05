@@ -61,7 +61,7 @@ GestureDetector item_listing(title, price, name, imgURL) {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 10, 0),
                       child: Text(
-                        price,
+                        '\$$price',
                         //style: AppTheme.of(context).bodyText1,
                       ),
                     ),
