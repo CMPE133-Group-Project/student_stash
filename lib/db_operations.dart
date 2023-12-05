@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -45,16 +46,72 @@ class DbOperations {
     }
   }
 
+  static Future<List> getAll(String directory) async {
+    List res = [];
+    Reference ref = FirebaseStorage.instance.ref().child(directory);
+    ListResult result = await ref.listAll();
+
+    result.items.forEach((Reference reference) {
+      String fileName = reference.name;
+      // You can also get other properties like URL, metadata, etc., if needed
+      // String fileUrl = await reference.getDownloadURL();
+      // FullMetadata metadata = await reference.getMetadata();
+
+      res.add(fileName);
+    });
+    return res;
+  }
+
   static Future<bool> createAccount(
       String emailText, String passwordText) async {
     try {
       await readFromFile('userinfo/$emailText');
+      print("Username Already Exists");
     } on Exception catch (e) {
-      print(e);
-      uploadTextToFirebaseStorage(passwordText, 'userinfo/$emailText');
-      return Future.value(true);
+      print("User Not Found, Creating new user");
+      try {
+        await uploadTextToFirebaseStorage(passwordText, 'userinfo/$emailText');
+        await uploadTextToFirebaseStorage(
+            'Hello!', 'userDetails/$emailText/bio');
+        print("uploaded bio");
+        CurrentSession.setCurrentName(emailText);
+        return true;
+      } catch (e) {
+        print("Issue uploading file $e");
+      }
     }
-    return Future.value(false);
+    return false;
+  }
+
+  static Future<void> updateUserBio(String bio) async {
+    await uploadTextToFirebaseStorage(
+        bio, 'userDetails/${CurrentSession.getCurrentName()}/bio');
+  }
+
+  static Future<void> updateUserImage(XFile? image) async {
+    Reference storageRef = FirebaseStorage.instance
+        .ref()
+        .child("userDetails/${CurrentSession.getCurrentName()}");
+    await storageRef.child("image").putFile(File(image!.path));
+  }
+
+  static Future<List> getUserDetails(String username) async {
+    List res = [];
+    final storageRef =
+        FirebaseStorage.instance.ref().child("userDetails/$username");
+    try {
+      res.add(await readFromFile('userDetails/$username/bio'));
+      res.add(await storageRef.child("image").getDownloadURL());
+    } catch (e) {
+      print("No image");
+      try {
+        res.add(await readFromFile('userDetails/$username/bio'));
+      } catch (e) {
+        print("No bio or image");
+        return [];
+      }
+    }
+    return res;
   }
 
   static Future<bool> verifyLogin(String emailText, String passwordText) async {
@@ -189,22 +246,98 @@ class DbOperations {
     await storageRef.delete();
   }
 
-  static Future<void> sendMessage(String listingID, String content) async {
+  static Future<List<List>> getMessagesAsSeller() async {
+    List<List> res = [];
+    String allListings = "";
+    try {
+      allListings = await readFromFile('userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+
+    } catch (e) {
+      return res;
+    }
+
+    String curString = '';
+    List listingsAsList = [];
+    while (allListings != "") {
+      int index = allListings.indexOf(';');
+      curString = allListings.substring(0, index);
+      allListings = allListings.substring(index + 1);
+      listingsAsList.add(curString);
+    }
+
+    for (int i = 0; i < listingsAsList.length; i++) {
+      try {
+        List usersInterested = await getAll('chats/${listingsAsList[i]}');
+        String listingName =
+            await readFromFile('listings/${listingsAsList[i]}/itemName');
+        for (int j = 0; j < usersInterested.length; j++) {
+          res.add([listingsAsList[i], listingName, usersInterested[j]]);
+        }
+      } catch (e) {
+        print("listing not in listings");
+      }
+    }
+    return res;
+  }
+
+  static Future<List<List>> getMessagesAsBuyer() async {
+    List<List> res = [];
+    String allListings = "";
+    try {
+      allListings = await readFromFile('buyerMessages/${CurrentSession.getCurrentName()}');
+
+    } catch (e) {
+      return res;
+    }
+
+    String curString = '';
+    List listingsAsList = [];
+    while (allListings != "") {
+      int index = allListings.indexOf(';');
+      curString = allListings.substring(0, index);
+      allListings = allListings.substring(index + 1);
+      listingsAsList.add(curString);
+    }
+
+    for (int i = 0; i < listingsAsList.length; i++) {
+      try {
+        String sellerID =
+            await readFromFile('listings/${listingsAsList[i]}/sellerName');
+        String itemName =
+            await readFromFile('listings/${listingsAsList[i]}/itemName');
+        res.add([
+          listingsAsList[i],
+          itemName,
+          sellerID,
+        ]);
+      } catch (e) {
+        print("listing no longer exists");
+      }
+    }
+
+    return res;
+  }
+
+  static Future<void> sendMessage(
+      String listingID, String content, String buyerID) async {
     //Name, Content, Time
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child("chats/$listingID/${CurrentSession.getCurrentName()}");
 
     try {
-      String currentMessages = await readFromFile(
-          'chats/$listingID/${CurrentSession.getCurrentName()}');
+      String currentMessages = await readFromFile('chats/$listingID/$buyerID');
       await uploadTextToFirebaseStorage(
           "$currentMessages${CurrentSession.getCurrentName()};$content;${DateTime.now()};",
-          "chats/$listingID/${CurrentSession.getCurrentName()}");
+          "chats/$listingID/$buyerID");
     } catch (e) {
       await uploadTextToFirebaseStorage(
-          "${CurrentSession.getCurrentName()};$content;${DateTime.now()};",
-          "chats/$listingID/${CurrentSession.getCurrentName()}");
+          "$buyerID;$content;${DateTime.now()};", "chats/$listingID/$buyerID");
+      try {
+        String buyerChats = await readFromFile('buyerMessages/$buyerID');
+        await uploadTextToFirebaseStorage(
+            "$listingID;$buyerChats", "buyerMessages/$buyerID");
+      } catch (f) {
+        await uploadTextToFirebaseStorage(
+            "$listingID;", "buyerMessages/$buyerID");
+      }
     }
   }
 
@@ -235,5 +368,23 @@ class DbOperations {
     }
 
     return res;
+  }
+
+  static Future<bool> changePassword(
+      String currentPassword, String newPassword) async {
+    String temp =
+        await readFromFile('userinfo/${CurrentSession.getCurrentName()}');
+    if (currentPassword == temp) {
+      try {
+        await uploadTextToFirebaseStorage(
+            newPassword, 'userinfo/${CurrentSession.getCurrentName()}');
+        return true;
+      } on Exception {
+        print("error uploading data");
+      }
+    } else {
+      print("Passwords do not match");
+    }
+    return false;
   }
 }

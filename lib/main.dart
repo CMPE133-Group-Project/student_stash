@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 //Firebase
 import 'package:firebase_core/firebase_core.dart';
+import 'package:student_stash/current_session.dart';
 import 'firebase_options.dart';
 import 'db_operations.dart';
 
@@ -17,9 +18,35 @@ import 'chat.dart';
 // Widgets
 import 'appbar.dart';
 
+
 List<List> items = [];
 Future<void> fetchUserOrder() async {
   items = await DbOperations.retreiveListings();
+}
+
+List<List> messages = [];
+Future<List<List>> fetchMessageOrder(String listingID, UserId) async {
+  messages = [];
+
+  messages = await DbOperations.readMessages(listingID, UserId);
+  return messages;
+}
+
+List<List> listingIDs = [];
+Future<void> fetchListingOrder() async {
+  listingIDs = [];
+
+  listingIDs = await DbOperations.retreiveListings();
+}
+
+List listingIDsAsBuyer = [];
+List listingIDsAsSeller = [];
+Future<void> fetchListingMessages() async {
+  listingIDsAsBuyer = [];
+  listingIDsAsSeller = [];
+
+  listingIDsAsBuyer = await DbOperations.getMessagesAsBuyer();
+  listingIDsAsSeller = await DbOperations.getMessagesAsSeller();
 }
 
 Future<void> main() async {
@@ -30,6 +57,7 @@ Future<void> main() async {
   runApp(const MyApp());
 
   fetchUserOrder();
+  await fetchListingOrder();
 }
 
 class MyApp extends StatelessWidget {
@@ -97,7 +125,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(),
+      appBar: myAppBar(context),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

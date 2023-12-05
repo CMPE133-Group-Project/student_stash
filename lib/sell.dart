@@ -100,6 +100,7 @@ class Sell extends StatelessWidget {
 
                   if (file != null) {
                     imageFiles.add(file);
+
                   }
                 },
                 child: Text('Upload Images'),
@@ -123,8 +124,6 @@ class Sell extends StatelessWidget {
                 for (XFile file in imageFiles) {
                   await DbOperations.uploadListing(file, title, description, price);
                 }
-
-                // You can use the user input for other backend stuff here.
                 Navigator.of(context).pop();
               },
               child: Text('Submit'),
