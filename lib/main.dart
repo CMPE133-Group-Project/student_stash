@@ -17,6 +17,12 @@ import 'chat.dart';
 // Widgets
 import 'appbar.dart';
 
+
+List<List> items = [];
+Future<void> fetchUserOrder() async {
+  items = await DbOperations.retreiveListings();
+}
+
 List<List> messages = [];
 Future<List<List>> fetchMessageOrder(String listingID, userId) async {
   messages = [];
@@ -48,6 +54,8 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
+
+  fetchUserOrder();
   await fetchListingOrder();
 }
 
@@ -99,7 +107,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  //static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const Shop(),
     const Sell(),
@@ -115,7 +123,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(),
+      appBar: myAppBar(context),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

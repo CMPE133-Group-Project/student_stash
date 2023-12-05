@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_stash/main.dart';
-import 'register.dart';
-import 'db_operations.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,29 +15,26 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
+        title: Text(
           'Login',
           style: TextStyle(color: Colors.white),
         ),
-        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(
+            Center(
               child: Text(
-                'STUDENT STASH', // First line
+                'Student', // First line
                 style: TextStyle(
-                  fontSize: 45.0, // Increase the font size
+                  fontSize: 64.0, // Increase the font size
                   fontWeight: FontWeight.bold, // Make it bold
-                  color: Colors.white,
                 ),
               ),
             ),
-            /*
-            const Center(
+            Center(
               child: Text(
                 'Stash', // Second line
                 style: TextStyle(
@@ -48,47 +43,38 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            */
-            const SizedBox(height: 16.0),
+            SizedBox(height: 16.0),
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
                 fillColor: Colors.white,
                 filled: true,
               ),
             ),
-            const SizedBox(height: 16.0),
+            SizedBox(height: 16.0),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password',
                 fillColor: Colors.white,
                 filled: true,
               ),
             ),
-            const SizedBox(height: 32.0),
+            SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () async {
-                if (await DbOperations.verifyLogin(
-                    emailController.text, passwordController.text)) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ));
-                }
+              onPressed: () {
 
-                await fetchListingMessages();
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                textStyle: const TextStyle(color: Colors.white),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                primary: Colors.black,
+                textStyle: TextStyle(color: Colors.white),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: const Text('Login'),
+              child: Text('Login'),
             ),
-            const SizedBox(height: 16.0),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -96,12 +82,11 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                textStyle: const TextStyle(color: Colors.white),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                primary: Colors.black,
+                textStyle: TextStyle(color: Colors.white),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: const Text('Create Account'),
+              child: Text('Create Account'),
             ),
           ],
         ),

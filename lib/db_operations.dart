@@ -137,7 +137,7 @@ class DbOperations {
       XFile? image, String name, String desc, String price) async {
     String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference storageRef =
-        FirebaseStorage.instance.ref().child("listings/$uniqueName");
+    FirebaseStorage.instance.ref().child("listings/$uniqueName");
 
     try {
       await storageRef.child("image").putFile(File(image!.path));
@@ -235,9 +235,15 @@ class DbOperations {
     return res;
   }
 
+  static Future<List> getChatsOnListing(String listingID) async {
+    List res = [];
+
+    return res;
+  }
+
   static Future<void> removeListing(String listingID) async {
     final storageRef =
-        FirebaseStorage.instance.ref().child("listings/$listingID");
+    FirebaseStorage.instance.ref().child("listings/$listingID");
     await storageRef.delete();
   }
 
@@ -246,6 +252,7 @@ class DbOperations {
     String allListings = "";
     try {
       allListings = await readFromFile('userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+
     } catch (e) {
       return res;
     }
@@ -279,6 +286,7 @@ class DbOperations {
     String allListings = "";
     try {
       allListings = await readFromFile('buyerMessages/${CurrentSession.getCurrentName()}');
+
     } catch (e) {
       return res;
     }
@@ -361,5 +369,23 @@ class DbOperations {
     }
 
     return res;
+  }
+
+  static Future<bool> changePassword(
+      String currentPassword, String newPassword) async {
+    String temp =
+        await readFromFile('userinfo/${CurrentSession.getCurrentName()}');
+    if (currentPassword == temp) {
+      try {
+        await uploadTextToFirebaseStorage(
+            newPassword, 'userinfo/${CurrentSession.getCurrentName()}');
+        return true;
+      } on Exception {
+        print("error uploading data");
+      }
+    } else {
+      print("Passwords do not match");
+    }
+    return false;
   }
 }
