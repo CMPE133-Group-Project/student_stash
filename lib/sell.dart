@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'db_operations.dart';
+import 'main.dart';
+import 'item_format.dart';
+import 'current_session.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,7 +12,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Sell(),
     );
   }
@@ -18,19 +21,28 @@ class MyApp extends StatelessWidget {
 class Sell extends StatelessWidget {
   const Sell({Key? key}) : super(key: key);
 
+  List<GestureDetector> getListings() {
+    List<GestureDetector> listings = [];
+    for (List item in items) {
+      if (item[5] == CurrentSession.getCurrentName()) {
+        listings.add(item_listing(item[1], item[3], item[5], item[4]));
+      }
+    }
+    return listings;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Center(
-            child: Text(
-              "Sell Page",
-              style: TextStyle(
-                fontSize: 45,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+          GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            crossAxisCount: 2,
+            children: getListings(),
           ),
           Positioned(
             bottom: 16,
@@ -52,6 +64,7 @@ class Sell extends StatelessWidget {
 
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
 
     List<XFile> imageFiles = [];
 
@@ -70,6 +83,14 @@ class Sell extends StatelessWidget {
               TextField(
                 controller: descriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: InputDecoration(
+                  labelText: 'Price',
+                  prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
+                ),
+                keyboardType: TextInputType.number,
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -96,10 +117,11 @@ class Sell extends StatelessWidget {
               onPressed: () async {
                 String title = titleController.text;
                 String description = descriptionController.text;
+                String price = priceController.text;
 
-                // Upload images
+                // Upload for every picture, as well as the other stuff
                 for (XFile file in imageFiles) {
-                  await DbOperations.uploadListing(file, title, description);
+                  await DbOperations.uploadListing(file, title, description, price);
                 }
 
                 // You can use the user input for other backend stuff here.

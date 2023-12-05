@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:student_stash/current_session.dart';
 import 'db_operations.dart';
 
@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-                  List<List> l = await DbOperations.retreiveUserListings();
+                  //List<List> l = await DbOperations.retreiveUserListings();
                   for (int i = 0; i < l.length; i++) {
                     List ll = l[i];
                     print(ll[0] + " " + ll[1] + " " + ll[2].toString());
@@ -50,3 +50,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+*/

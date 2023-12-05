@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 //Firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'db_operations.dart';
 
 // Pages
 import 'login.dart';
@@ -16,12 +17,19 @@ import 'chat.dart';
 // Widgets
 import 'appbar.dart';
 
+List<List> items = [];
+Future<void> fetchUserOrder() async {
+  items = await DbOperations.retreiveListings();
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
+
+  fetchUserOrder();
 }
 
 class MyApp extends StatelessWidget {

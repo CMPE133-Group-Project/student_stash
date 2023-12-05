@@ -76,22 +76,28 @@ class DbOperations {
   }
 
   static Future<bool> uploadListing(
-      XFile? image, String name, String desc) async {
+      XFile? image, String name, String desc, String price) async {
     String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference storageRef =
-        FirebaseStorage.instance.ref().child("listings/$uniqueName");
+    FirebaseStorage.instance.ref().child("listings/$uniqueName");
 
     try {
       await storageRef.child("image").putFile(File(image!.path));
       await uploadTextToFirebaseStorage(name, "listings/$uniqueName/itemName");
       await uploadTextToFirebaseStorage(desc, "listings/$uniqueName/itemDesc");
+      await uploadTextToFirebaseStorage(
+          CurrentSession.getCurrentName(), "listings/$uniqueName/sellerName");
+      await uploadTextToFirebaseStorage(
+          price, "listings/$uniqueName/itemPrice");
 
       String allListings = await readFromFile('currentListings.txt');
       await uploadTextToFirebaseStorage(
           "$allListings$uniqueName;", "currentListings.txt");
 
       try {
-        String userListings = await readFromFile('userListings/uploads.txt');
+        String userListings = await readFromFile(
+            'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+        print(userListings);
         await uploadTextToFirebaseStorage("$userListings$uniqueName;",
             "userListings/${CurrentSession.getCurrentName()}/uploads.txt");
       } catch (e) {
@@ -123,7 +129,9 @@ class DbOperations {
         temp.add(curString);
         temp.add(await readFromFile("listings/$curString/itemName"));
         temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await readFromFile("listings/$curString/itemPrice"));
         temp.add(await storageRef.child("$curString/image").getDownloadURL());
+        temp.add(await readFromFile("listings/$curString/sellerName"));
 
         res.add(temp);
       } catch (e) {
@@ -134,12 +142,11 @@ class DbOperations {
     return res;
   }
 
-  static Future<List<List>> retreiveUserListings() async {
+  static Future<List<List>> retreiveUserListings(String userID) async {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile(
-          'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+      allListings = await readFromFile('userListings/${userID}/uploads.txt');
     } catch (e) {
       return res;
     }
@@ -157,7 +164,9 @@ class DbOperations {
         temp.add(curString);
         temp.add(await readFromFile("listings/$curString/itemName"));
         temp.add(await readFromFile("listings/$curString/itemDesc"));
+        temp.add(await readFromFile("listings/$curString/itemPrice"));
         temp.add(await storageRef.child("$curString/image").getDownloadURL());
+        temp.add(await readFromFile("listings/$curString/sellerName"));
 
         res.add(temp);
       } catch (e) {
@@ -168,9 +177,15 @@ class DbOperations {
     return res;
   }
 
+  static Future<List> getChatsOnListing(String listingID) async {
+    List res = [];
+
+    return res;
+  }
+
   static Future<void> removeListing(String listingID) async {
     final storageRef =
-        FirebaseStorage.instance.ref().child("listings/$listingID");
+    FirebaseStorage.instance.ref().child("listings/$listingID");
     await storageRef.delete();
   }
 

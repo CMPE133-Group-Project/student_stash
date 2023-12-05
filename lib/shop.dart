@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 
 // Widgets
 import 'item_format.dart';
+import 'main.dart';
+import 'current_session.dart';
 
 class Shop extends StatelessWidget {
   const Shop({Key? key}) : super(key: key);
+
+  List<GestureDetector> getListings() {
+    List<GestureDetector> listings = [];
+    for (List item in items) {
+      if (item[5] != CurrentSession.getCurrentName()) {
+        listings.add(item_listing(item[1], item[3], item[5], item[4]));
+      }
+    }
+    return listings;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +26,7 @@ class Shop extends StatelessWidget {
       crossAxisSpacing: 20,
       mainAxisSpacing: 20,
       crossAxisCount: 2,
-      children: <Widget>[
-        item("Paper Clip", 90.36, "Jane S.", 2.3, "assets/images/paperclip.jpg"),
-        item("Paper Clip", 90.35, "Jayce L.", 5.0, "assets/images/paperclip.jpg"),
-        item("Paper Clip", 0.01, "Charlie R.", 0.2, "assets/images/paperclip.jpg"),
-        item("Paper Clip", 16.01, "Benjamin G.", -864.9, "assets/images/paperclip.jpg"),
-      ],
+      children: getListings(),
     );
   }
 }
