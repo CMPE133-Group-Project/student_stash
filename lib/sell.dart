@@ -23,11 +23,11 @@ class Sell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] == CurrentSession.getCurrentName()) {
-        listings.add(item_listing(item[1], item[3], item[5], item[4], item[2], context));
+        listings.add(item_listing(
+            item[1], item[3], item[5], item[4], item[2], item[0], context));
       }
     }
 
@@ -86,7 +86,8 @@ class Sell extends StatelessWidget {
                 controller: priceController,
                 decoration: InputDecoration(
                   labelText: 'Price',
-                  prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
+                  prefixText:
+                      '\$ ', // Dollar at the start, easier for user and looks cool
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -98,16 +99,12 @@ class Sell extends StatelessWidget {
 
                   if (file != null) {
                     imageFiles.add(file);
-
                   }
                 },
                 child: const Text('Select Picture'),
               ),
-              const SizedBox(height: 20), // Adding some space between the buttons
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Upload'),
-              ),
+              const SizedBox(
+                  height: 20), // Adding some space between the buttons
             ],
           ),
           actions: <Widget>[
@@ -125,7 +122,8 @@ class Sell extends StatelessWidget {
 
                 // Upload for every picture, as well as the other stuff
                 for (XFile file in imageFiles) {
-                  await DbOperations.uploadListing(file, title, description, price);
+                  await DbOperations.uploadListing(
+                      file, title, description, price);
                 }
                 Navigator.of(context).pop();
               },

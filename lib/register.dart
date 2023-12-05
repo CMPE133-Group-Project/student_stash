@@ -44,12 +44,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ElevatedButton(
               onPressed: () async {
                 //Takes the user to login page after creating an account
-                if (await DbOperations.createAccount(
-                    emailController.text, confirmPasswordController.text)) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ));
-                }
+                if (emailController.text.contains("@sjsu.edu")) {
+                  if (await DbOperations.createAccount(
+                      emailController.text, confirmPasswordController.text)) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ));
+                  }
+                } else {}
               },
               child: const Text('Register'),
             ),

@@ -137,7 +137,7 @@ class DbOperations {
       XFile? image, String name, String desc, String price) async {
     String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference storageRef =
-    FirebaseStorage.instance.ref().child("listings/$uniqueName");
+        FirebaseStorage.instance.ref().child("listings/$uniqueName");
 
     try {
       await storageRef.child("image").putFile(File(image!.path));
@@ -243,16 +243,20 @@ class DbOperations {
 
   static Future<void> removeListing(String listingID) async {
     final storageRef =
-    FirebaseStorage.instance.ref().child("listings/$listingID");
-    await storageRef.delete();
+        FirebaseStorage.instance.ref().child("listings/$listingID");
+    await storageRef.listAll().then((value) {
+      value.items.forEach((element) {
+        FirebaseStorage.instance.ref(element.fullPath).delete();
+      });
+    });
   }
 
   static Future<List<List>> getMessagesAsSeller() async {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile('userListings/${CurrentSession.getCurrentName()}/uploads.txt');
-
+      allListings = await readFromFile(
+          'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
     } catch (e) {
       return res;
     }
@@ -285,8 +289,8 @@ class DbOperations {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile('buyerMessages/${CurrentSession.getCurrentName()}');
-
+      allListings = await readFromFile(
+          'buyerMessages/${CurrentSession.getCurrentName()}');
     } catch (e) {
       return res;
     }
