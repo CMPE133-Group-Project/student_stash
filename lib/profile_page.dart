@@ -110,9 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
       String currentPassword = currentPasswordController.text.trim();
       String newPassword = newPasswordController.text.trim();
 
-      if (await DbOperations.verifyLogin(
-          CurrentSession.getCurrentName(), currentPassword)) {
-        await DbOperations.changePassword(currentPassword, newPassword);
+      if (await DbOperations.changePassword(currentPassword, newPassword)) {
         _showSuccessDialog();
       } else {
         _showErrorDialog('Incorrect current password.');
@@ -167,7 +165,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -212,8 +211,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     backgroundImage: _imageFile != null
                         ? Image.file(_imageFile!).image
                         : _imageUrl != null
-                        ? NetworkImage(_imageUrl!) as ImageProvider
-                        : const AssetImage('assets/images/defaultAvatar.png'),
+                            ? NetworkImage(_imageUrl!) as ImageProvider
+                            : const AssetImage(
+                                'assets/images/defaultAvatar.png'),
                   ),
                 ),
                 SizedBox(height: 16.0),

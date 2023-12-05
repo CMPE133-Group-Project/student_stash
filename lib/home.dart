@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_stash/current_session.dart';
 import 'db_operations.dart';
+import 'current_session.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,7 +19,8 @@ class Home extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-                  List<List> l = await DbOperations.retreiveUserListings();
+                  List<List> l = await DbOperations.retreiveUserListings(
+                      CurrentSession.getCurrentName());
                   for (int i = 0; i < l.length; i++) {
                     List ll = l[i];
                     print(ll[0] + " " + ll[1] + " " + ll[2].toString());
@@ -39,7 +41,8 @@ class Home extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await DbOperations.sendMessage("1699847552664", "Hey boss");
+                  await DbOperations.sendMessage(
+                      "1699847552664", "Hey boss", 'tyler');
                 },
                 child: const Text('Add Message'),
               ),
