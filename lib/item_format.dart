@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 import 'item_detail.dart';
+import 'item_edit.dart';
+import 'current_session.dart';
 
 GestureDetector item_listing(title, price, name, imgURL, desc, BuildContext context) {
 
   return GestureDetector (
       onTap: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ItemDetail(title: title, price: price, name: name, imgURL: imgURL, desc: desc)),
-        );
+        if (name!=CurrentSession.getCurrentName()) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                ItemDetail(title: title,
+                    price: price,
+                    name: name,
+                    imgURL: imgURL,
+                    desc: desc)),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                ItemEdit(title: title,
+                    price: price,
+                    name: name,
+                    imgURL: imgURL,
+                    desc: desc)),
+          );
+        }
       },
       child: Container(
       //width: MediaQuery.of(context).size.width * 0.45,

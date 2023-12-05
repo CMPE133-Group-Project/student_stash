@@ -7,7 +7,9 @@ import 'dart:io';
 
 PreferredSizeWidget myAppBar(BuildContext context) {
   return AppBar(
-    title: const Text('STUDENT STASH'),
+    title: const Text(
+        'STUDENT STASH',
+        style: TextStyle(color:Colors.white)),
     backgroundColor: Colors.indigo,
     centerTitle: true,
     actions: <Widget>[

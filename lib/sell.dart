@@ -49,7 +49,7 @@ class Sell extends StatelessWidget {
               onPressed: () {
                 _showProductEntryDialog(context);
               },
-              child: Icon(Icons.edit),
+              child: const Icon(Icons.edit),
             ),
           ),
         ],
