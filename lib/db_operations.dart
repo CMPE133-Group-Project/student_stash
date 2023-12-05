@@ -245,6 +245,7 @@ class DbOperations {
     String allListings = "";
     try {
       allListings = await readFromFile('userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+
     } catch (e) {
       return res;
     }
@@ -278,6 +279,7 @@ class DbOperations {
     String allListings = "";
     try {
       allListings = await readFromFile('buyerMessages/${CurrentSession.getCurrentName()}');
+
     } catch (e) {
       return res;
     }
@@ -360,5 +362,23 @@ class DbOperations {
     }
 
     return res;
+  }
+
+  static Future<bool> changePassword(
+      String currentPassword, String newPassword) async {
+    String temp =
+        await readFromFile('userinfo/${CurrentSession.getCurrentName()}');
+    if (currentPassword == temp) {
+      try {
+        await uploadTextToFirebaseStorage(
+            newPassword, 'userinfo/${CurrentSession.getCurrentName()}');
+        return true;
+      } on Exception {
+        print("error uploading data");
+      }
+    } else {
+      print("Passwords do not match");
+    }
+    return false;
   }
 }

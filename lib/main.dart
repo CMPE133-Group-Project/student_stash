@@ -101,7 +101,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const Shop(),
     const Sell(),
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(),
+      appBar: myAppBar(context),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
