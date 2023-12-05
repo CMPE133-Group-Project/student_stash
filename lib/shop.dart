@@ -18,13 +18,18 @@ class Shop extends StatelessWidget {
       }
     }
 
-    return GridView.count(
-      primary: false,
-      padding: const EdgeInsets.all(20),
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 20,
-      crossAxisCount: 2,
-      children: listings,
+    return RefreshIndicator(
+        child: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(20),
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          crossAxisCount: 2,
+          children: listings,
+        ),
+        onRefresh: (){
+          return fetchUserOrder();
+        },
     );
   }
 }

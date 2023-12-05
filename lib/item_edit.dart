@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'appbar.dart';
+import 'current_session.dart';
 
 
 
-
-class ItemDetail extends StatelessWidget {
+class ItemEdit extends StatelessWidget {
   final String title;
   final String price;
   final String name;
   final String imgURL;
   final String desc;
-  const ItemDetail({super.key, required this.title, required this.price, required this.name, required this.imgURL, required this.desc});
+  const ItemEdit({super.key, required this.title, required this.price, required this.name, required this.imgURL, required this.desc});
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +48,13 @@ class ItemDetail extends StatelessWidget {
           Center(
             child: TextButton(
               style: OutlinedButton.styleFrom(
-                primary: Colors.indigo,
+                primary: Colors.red,
                 side: const BorderSide(
-                  color: Colors.indigo,
+                  color: Colors.red,
                 ),
               ),
               onPressed: () {},
-              child: const Text("Interested? Message me!"),
+              child: const Text("Delete Listing"),
             ),
           ),
           const Padding(
