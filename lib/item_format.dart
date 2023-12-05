@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'item_detail.dart';
 
-GestureDetector item_listing(title, price, name, imgURL) {
+GestureDetector item_listing(title, price, name, imgURL, desc, BuildContext context) {
 
   return GestureDetector (
       onTap: (){
-        print("Container clicked");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ItemDetail(title: title, price: price, name: name, imgURL: imgURL, desc: desc)),
+        );
       },
       child: Container(
       //width: MediaQuery.of(context).size.width * 0.45,

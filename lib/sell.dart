@@ -21,18 +21,16 @@ class MyApp extends StatelessWidget {
 class Sell extends StatelessWidget {
   const Sell({Key? key}) : super(key: key);
 
-  List<GestureDetector> getListings() {
+  @override
+  Widget build(BuildContext context) {
+
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] == CurrentSession.getCurrentName()) {
-        listings.add(item_listing(item[1], item[3], item[5], item[4]));
+        listings.add(item_listing(item[1], item[3], item[5], item[4], item[2], context));
       }
     }
-    return listings;
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
@@ -42,7 +40,7 @@ class Sell extends StatelessWidget {
             crossAxisSpacing: 20,
             mainAxisSpacing: 20,
             crossAxisCount: 2,
-            children: getListings(),
+            children: listings,
           ),
           Positioned(
             bottom: 16,
@@ -86,7 +84,7 @@ class Sell extends StatelessWidget {
               ),
               TextField(
                 controller: priceController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Price',
                   prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
                 ),
