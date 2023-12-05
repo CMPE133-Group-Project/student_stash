@@ -88,6 +88,7 @@ class Sell extends StatelessWidget {
 
                   if (file != null) {
                     imageFiles.add(file);
+
                   }
                 },
                 child: Text('Upload Images'),

@@ -244,8 +244,8 @@ class DbOperations {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile(
-          'userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+      allListings = await readFromFile('userListings/${CurrentSession.getCurrentName()}/uploads.txt');
+
     } catch (e) {
       return res;
     }
@@ -278,8 +278,8 @@ class DbOperations {
     List<List> res = [];
     String allListings = "";
     try {
-      allListings = await readFromFile(
-          'buyerMessages/${CurrentSession.getCurrentName()}');
+      allListings = await readFromFile('buyerMessages/${CurrentSession.getCurrentName()}');
+
     } catch (e) {
       return res;
     }
