@@ -1,9 +1,13 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:student_stash/main.dart';
 import 'register.dart';
 import 'db_operations.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -81,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 await fetchListingMessages();
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
+                backgroundColor: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -92,11 +96,11 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => RegistrationPage(),
+                  builder: (context) => const RegistrationPage(),
                 ));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
+                backgroundColor: Colors.white,
                 textStyle: const TextStyle(color: Colors.white),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

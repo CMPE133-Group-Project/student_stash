@@ -245,9 +245,9 @@ class DbOperations {
     final storageRef =
         FirebaseStorage.instance.ref().child("listings/$listingID");
     await storageRef.listAll().then((value) {
-      value.items.forEach((element) {
+      for (var element in value.items) {
         FirebaseStorage.instance.ref(element.fullPath).delete();
-      });
+      }
     });
   }
 

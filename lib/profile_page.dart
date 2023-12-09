@@ -174,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     setState(() {
       if (pickedFile != null) {
-        _imageFile = File(pickedFile.path!);
+        _imageFile = File(pickedFile.path);
       }
     });
   }
@@ -243,12 +243,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: _saveProfile,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
@@ -256,23 +256,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.red,
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Logout'),
+                  child: const Text('Logout'),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     _showChangePasswordDialog();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.green,
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Change Password'),
+                  child: const Text('Change Password'),
                 ),
               ],
             ),
