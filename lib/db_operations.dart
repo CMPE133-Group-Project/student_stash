@@ -323,8 +323,7 @@ class DbOperations {
     return res;
   }
 
-  static Future<void> sendMessage(
-      String listingID, String content, String buyerID) async {
+  static Future<void> sendMessage(String listingID, String content, String buyerID) async {
     //Name, Content, Time
 
     try {

@@ -31,7 +31,7 @@ class _ChatPageState extends State<ChatPage>{
   
   Future<void> sendMessage() async {
     // only send message if there is something to send
-    if (_messageController.text.isNotEmpty) {
+    if (_messageController.text.trim().isNotEmpty) {
       String message = _messageController.text;
       _messageController.text = "sending...";
 

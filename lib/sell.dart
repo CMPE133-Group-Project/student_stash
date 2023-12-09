@@ -112,7 +112,7 @@ class Sell extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -122,12 +122,12 @@ class Sell extends StatelessWidget {
 
                 // Upload for every picture, as well as the other stuff
                 for (XFile file in imageFiles) {
-                  await DbOperations.uploadListing(
-                      file, title, description, price);
+                  await DbOperations.uploadListing(file, title, description, price);
+                  await fetchUserOrder();
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         );

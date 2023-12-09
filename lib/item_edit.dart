@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'main.dart';
 import 'appbar.dart';
 import 'db_operations.dart';
 
@@ -55,13 +55,13 @@ class ItemEdit extends StatelessWidget {
           Center(
             child: TextButton(
               style: OutlinedButton.styleFrom(
-                primary: Colors.red,
-                side: const BorderSide(
+                foregroundColor: Colors.red, side: const BorderSide(
                   color: Colors.red,
                 ),
               ),
               onPressed: () async {
                 await DbOperations.removeListing(id);
+                await fetchUserOrder();
               },
               child: const Text("Delete Listing"),
             ),
