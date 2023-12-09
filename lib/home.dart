@@ -19,9 +19,7 @@ class Home extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-<<<<<<< HEAD
                   //List<List> l = await DbOperations.retreiveUserListings();
-=======
                   // List<List> l = await DbOperations.retreiveUserListings();
                   // for (int i = 0; i < l.length; i++) {
                   //   List ll = l[i];
@@ -29,7 +27,6 @@ class Home extends StatelessWidget {
                   // }
                   List<List> l = await DbOperations.retreiveUserListings(
                       CurrentSession.getCurrentName());
->>>>>>> 9b769e315a8423e4d000a55eca6fd7d96a9e592f
                   for (int i = 0; i < l.length; i++) {
                     List ll = l[i];
                     print(ll[0] + " " + ll[1] + " " + ll[2].toString());

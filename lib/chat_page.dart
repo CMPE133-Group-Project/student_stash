@@ -4,15 +4,16 @@ import 'package:student_stash/current_session.dart';
 import 'package:student_stash/main.dart';
 import 'db_operations.dart';
 
+//create parameter passed in by chat.dart
 class ChatPage extends StatefulWidget {
   final String receiverName;
   final String listingID;
   final bool isSeller;
   const ChatPage({
     super.key,
-    required this.receiverName,
-    required this.listingID,
-    required this.isSeller,
+    required this.receiverName, // The person the user is talking to
+    required this.listingID, // The listing the chat is under
+    required this.isSeller, // Is the user the seller of this listing?
   });
 
   @override
@@ -20,15 +21,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage>{
-  final TextEditingController _messageController = TextEditingController();
-  //final ChatService _chatService = ChatService();
-  //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  //final ScrollController _controller = ScrollController();
+  final TextEditingController _messageController = TextEditingController(); // create user input for textfield
 
-  // void _scrollDown() {
-  //   _controller.jumpTo(_controller.position.maxScrollExtent);
-  // }
-  
   Future<void> sendMessage() async {
     // only send message if there is something to send
     if (_messageController.text.trim().isNotEmpty) {
@@ -73,6 +67,7 @@ class _ChatPageState extends State<ChatPage>{
   Widget _buildMessageList() {
     final children = <Widget>[];
 
+    // loops through series of messages under listing and display them accordingly
     for (int i = messages.length - 1; i >= 0; i--) {
       List messageInfos = messages[i];
 
@@ -80,7 +75,7 @@ class _ChatPageState extends State<ChatPage>{
       String messageContent = messageInfos[1];
       String messageTimestamp = messageInfos[2];
   
-      if (messageOwner == CurrentSession.getCurrentName()) {
+      if (messageOwner == CurrentSession.getCurrentName()) { // If the message belong to current user, the name will be displayed as "You"
         messageOwner = "You";
       }
 
@@ -89,16 +84,14 @@ class _ChatPageState extends State<ChatPage>{
   
     return ListView(
       shrinkWrap: true,
-      reverse: true,
+      reverse: true, // This helps make the message pop up from the bottom so the user does not have to scroll to the bottom when sending a new message
       children: children,
     );
   }
 
   // build message item
   Widget _buildMessageItem(String owner, String content, String timestamp) {
-    //Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-
-    //align the messages to the right if the sender is the current user, otherwise to the left
+    // align the messages to the right if the sender is the current user, otherwise to the left
     var alignment = (owner == CurrentSession.currentName || owner == "You")
         ? Alignment.centerRight
         : Alignment.centerLeft;
@@ -115,10 +108,8 @@ class _ChatPageState extends State<ChatPage>{
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
-            // Original Below: Text(data['senderEmail']),
             Text(owner),
             const SizedBox(height: 5),
-            // Original Below: ChatBubble(message: data['message']),
             ChatBubble(owner: owner, message: content),
             Text(timestamp),
           ]
@@ -142,6 +133,7 @@ class _ChatPageState extends State<ChatPage>{
             ),
           ),
 
+          // send button
           IconButton(
             onPressed: () async {sendMessage();},
             icon: const Icon(
