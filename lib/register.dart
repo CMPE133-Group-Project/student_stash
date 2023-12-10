@@ -9,12 +9,14 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  // Text editing controllers for email and password fields
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold widget for how the page will look
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Account'),
