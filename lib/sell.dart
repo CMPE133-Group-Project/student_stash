@@ -9,7 +9,7 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { //build the app
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -24,6 +24,7 @@ class Sell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // get list of current listings on the firebase
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] == CurrentSession.getCurrentName()) {
@@ -31,16 +32,22 @@ class Sell extends StatelessWidget {
       }
     }
 
+    // main build
     return Scaffold(
       body: Stack(
         children: [
-          GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
-            crossAxisCount: 2,
-            children: listings,
+            RefreshIndicator(
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              crossAxisCount: 2,
+              children: listings,
+            ),
+            onRefresh: (){
+              return fetchUserOrder();
+            },
           ),
           Positioned(
             bottom: 16,

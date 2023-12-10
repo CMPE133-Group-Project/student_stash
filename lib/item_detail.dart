@@ -14,7 +14,7 @@ class ItemDetail extends StatelessWidget {
   const ItemDetail({super.key, required this.title, required this.price, required this.name, required this.imgURL, required this.desc});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // detailed page listing
     return Scaffold(
       appBar: myAppBar(context),
       body: ListView(

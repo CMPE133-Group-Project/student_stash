@@ -14,7 +14,7 @@ class ItemEdit extends StatelessWidget {
   const ItemEdit({super.key, required this.title, required this.price, required this.name, required this.imgURL, required this.desc});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // detailed page listing if the item belongs to current user
     return Scaffold(
       appBar: myAppBar(context),
       body: ListView(

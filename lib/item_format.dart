@@ -5,6 +5,7 @@ import 'current_session.dart';
 
 GestureDetector item_listing(title, price, name, imgURL, desc, BuildContext context) {
 
+    // see user taps and open up new page with listing details
   return GestureDetector (
       onTap: (){
         if (name!=CurrentSession.getCurrentName()) {
@@ -29,6 +30,7 @@ GestureDetector item_listing(title, price, name, imgURL, desc, BuildContext cont
           );
         }
       },
+    // display listing item whe, in shop or sell page
       child: Container(
       //width: MediaQuery.of(context).size.width * 0.45,
         decoration: BoxDecoration(

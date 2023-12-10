@@ -11,6 +11,7 @@ class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // get list of listings from firebase
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] != CurrentSession.getCurrentName()) {
@@ -18,6 +19,7 @@ class Shop extends StatelessWidget {
       }
     }
 
+    // pull down to refresh
     return RefreshIndicator(
         child: GridView.count(
           primary: false,
