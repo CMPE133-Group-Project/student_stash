@@ -13,19 +13,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // Text editing controllers for email and password fields
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold widget for how the page will be structured visually
     return Scaffold(
+      // App bar with a title of our app and background
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
           'Login',
           style: TextStyle(color: Colors.white),
         ),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,  // This removes back button on page
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,26 +37,16 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Center(
               child: Text(
-                'STUDENT STASH', // First line
+                'STUDENT STASH',
                 style: TextStyle(
-                  fontSize: 45.0, // Increase the font size
-                  fontWeight: FontWeight.bold, // Make it bold
+                  fontSize: 45.0,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
             ),
-            /*
-            const Center(
-              child: Text(
-                'Stash', // Second line
-                style: TextStyle(
-                  fontSize: 64.0, // Increase the font size
-                  fontWeight: FontWeight.bold, // Make it bold
-                ),
-              ),
-            ),
-            */
             const SizedBox(height: 16.0),
+            // Text input field for email
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
@@ -73,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 32.0),
+            // Login button that goes to homepage if login successful.
             ElevatedButton(
               onPressed: () async {
                 if (await DbOperations.verifyLogin(
@@ -110,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+      // Background color for the entire page, we made it indigo
       backgroundColor: Colors.indigo,
     );
   }
