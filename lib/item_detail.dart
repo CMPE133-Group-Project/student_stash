@@ -57,7 +57,7 @@ class ItemDetail extends StatelessWidget {
           Center(
             child: TextButton(
               style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.indigo,
                 side: const BorderSide(
                   color: Colors.indigo,
                 ),
