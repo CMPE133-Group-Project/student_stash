@@ -41,26 +41,40 @@ Here are some terminal commands:
 
 ## Terminal Based Commands
 Go back a path
+
 cd..
 
+
 Go to next path
+
 cd Next_Path_Name
 
+
 Go to any path
+
 cd Full_Path_Name
 
-Run the command git <Paste your path directory here>
+
+Run the command 
+
+git <Paste your path directory here>
 
 # STEP 5
 
-Run the command git clone https://github.com/CMPE133-Group-Project/student_stash.git
+Run the command 
+
+git clone https://github.com/CMPE133-Group-Project/student_stash.git
 
 # STEP 6
 
-Run the command cd student_stash
+Run the command 
+
+cd student_stash
 
 # STEP 7
 
-Run the command flutter run (It will take a while for your program to initialize)
+Run the command 
+
+flutter run (It will take a while for your program to initialize)
 
 At this point you should have your environment and code running for edit and test!
