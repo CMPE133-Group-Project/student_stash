@@ -6,6 +6,7 @@ class Item {
   final double price;
   final String imgURL;
   final String desc;
+  final String id;
 
-  Item(this.seller, this.title, this.price, this.imgURL, this.desc);
+  Item(this.seller, this.title, this.price, this.imgURL, this.desc, this.id);
 }

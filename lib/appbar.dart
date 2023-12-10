@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: avoid_print
 
-import 'main.dart';
+import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'dart:io';
 
@@ -20,7 +20,7 @@ PreferredSizeWidget myAppBar(BuildContext context) {
             // Navigate to ProfilePage and wait result
             final result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
             );
 
             if (result != null && result is Map<String, dynamic>) {

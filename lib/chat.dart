@@ -23,31 +23,25 @@ class _ChatState extends State<Chat> {
   }
 
   // build a list of users except for the current login user
-
-
   Widget _buildUserList() {
     final children = <Widget>[];
 
-    for (List listingMessageInfo in listingIDsAsBuyer) {
+    for (List listingMessageInfo in listingIDsAsBuyer) { // loop through listing messages as a buyer to display chat tabs
       String listingID = listingMessageInfo[0];
       String listingName = listingMessageInfo[1];
       String receiverName = listingMessageInfo[2];
 
-      if (receiverName == CurrentSession.getCurrentName()) {
+      if (receiverName == CurrentSession.getCurrentName()) { // Do not display chat tabs that contains conversation of themselves (This should not happen, but is here as a precaution)
         continue;
       }
 
       String listingImage = "";
 
-      for (int i = 0; i < listingIDs.length; i++) {
+      for (int i = 0; i < listingIDs.length; i++) { // Find the image that belong to this listing
         if (listingIDs[i][0] == listingID) {
           listingImage = listingIDs[i][4];
         }
       }
-
-      // String lastRecentMessage = "";
-      // const Chat().loadMessage(listingID, receiverName);
-      // lastRecentMessage = messages[messages.length - 1][1];
 
       children.add(_buildUserListItem(
         context,
@@ -60,26 +54,22 @@ class _ChatState extends State<Chat> {
       ));
     }
 
-    for (List listingMessageInfo in listingIDsAsSeller) {
+    for (List listingMessageInfo in listingIDsAsSeller) { // loop through listing messages as a seller to display chat tabs
       String listingID = listingMessageInfo[0];
       String listingName = listingMessageInfo[1];
       String receiverName = listingMessageInfo[2];
 
-      if (receiverName == CurrentSession.getCurrentName()) {
+      if (receiverName == CurrentSession.getCurrentName()) { // Do not display chat tabs that contains conversation of themselves (This should not happen, but is here as a precaution)
         continue;
       }
 
       String listingImage = "";
 
-      for (int i = 0; i < listingIDs.length; i++) {
+      for (int i = 0; i < listingIDs.length; i++) { // Find the image that belong to this listing
         if (listingIDs[i][0] == listingID) {
           listingImage = listingIDs[i][4];
         }
       }
-
-      // String lastRecentMessage = "";
-      // const Chat().loadMessage(listingID, receiverName);
-      // lastRecentMessage = messages[messages.length - 1][1];
 
       children.add(_buildUserListItem(
         context,

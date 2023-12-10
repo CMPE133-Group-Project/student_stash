@@ -10,28 +10,28 @@ class Shop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // get list of listings from firebase
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] != CurrentSession.getCurrentName()) {
-        listings.add(item_listing(item[1], item[3], item[5], item[4], item[2], context));
+        listings.add(item_listing(
+            item[1], item[3], item[5], item[4], item[2], item[0], context));
       }
     }
 
     // pull down to refresh
     return RefreshIndicator(
-        child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-          crossAxisCount: 2,
-          children: listings,
-        ),
-        onRefresh: (){
-          return fetchUserOrder();
-        },
+      child: GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(20),
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        crossAxisCount: 2,
+        children: listings,
+      ),
+      onRefresh: () {
+        return fetchUserOrder();
+      },
     );
   }
 }

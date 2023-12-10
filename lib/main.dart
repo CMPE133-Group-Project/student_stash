@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       initialRoute: '/login',
       routes: {
-        '/login': (context) => LoginPage(),
+        '/login': (context) => const LoginPage(),
       },
       theme: ThemeData(
         useMaterial3: true,
@@ -108,7 +108,7 @@ class HomePage extends StatefulWidget {
 // set different pages accessible by bottom nav bar
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const Shop(),
     const Sell(),

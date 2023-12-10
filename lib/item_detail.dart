@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:student_stash/current_session.dart';
+import 'package:student_stash/db_operations.dart';
+import 'main.dart';
 
 import 'appbar.dart';
-
-
-
 
 class ItemDetail extends StatelessWidget {
   final String title;
@@ -11,7 +11,15 @@ class ItemDetail extends StatelessWidget {
   final String name;
   final String imgURL;
   final String desc;
-  const ItemDetail({super.key, required this.title, required this.price, required this.name, required this.imgURL, required this.desc});
+  final String id;
+  const ItemDetail(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.name,
+      required this.imgURL,
+      required this.desc,
+      required this.id});
 
   @override
   Widget build(BuildContext context) { // detailed page listing
@@ -27,33 +35,40 @@ class ItemDetail extends StatelessWidget {
           ),
           // Product title and price
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
             child: Text(
               '$title\n\$$price',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
             ),
           ),
           // Product description
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-                'Listed by $name',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0)),
+            child: Text('Listed by $name',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 17.0)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-            child: Text(
-                desc),
+            child: Text(desc),
           ),
           Center(
             child: TextButton(
               style: OutlinedButton.styleFrom(
-                primary: Colors.indigo,
+                foregroundColor: Colors.indigo,
                 side: const BorderSide(
                   color: Colors.indigo,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                await DbOperations.sendMessage(
+                    id,
+                    "Hello, I am interested in buying $title.",
+                    CurrentSession.getCurrentName());
+                fetchListingMessages();
+              },
               child: const Text("Interested? Message me!"),
             ),
           ),

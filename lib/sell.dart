@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'db_operations.dart';
@@ -6,10 +8,13 @@ import 'item_format.dart';
 import 'current_session.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget { //build the app
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+main
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -23,12 +28,12 @@ class Sell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // get list of current listings on the firebase
     List<GestureDetector> listings = [];
     for (List item in items) {
       if (item[5] == CurrentSession.getCurrentName()) {
-        listings.add(item_listing(item[1], item[3], item[5], item[4], item[2], context));
+        listings.add(item_listing(
+            item[1], item[3], item[5], item[4], item[2], item[0], context));
       }
     }
 
@@ -77,23 +82,24 @@ class Sell extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Enter Product Information"),
+          title: const Text("Enter Product Information"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
               ),
               TextField(
                 controller: priceController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Price',
-                  prefixText: '\$ ', // Dollar at the start, easier for user and looks cool
+                  prefixText:
+                      '\$ ', // Dollar at the start, easier for user and looks cool
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -105,16 +111,12 @@ class Sell extends StatelessWidget {
 
                   if (file != null) {
                     imageFiles.add(file);
-
                   }
                 },
                 child: const Text('Select Picture'),
               ),
-              const SizedBox(height: 20), // Adding some space between the buttons
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Upload'),
-              ),
+              const SizedBox(
+                  height: 20), // Adding some space between the buttons
             ],
           ),
           actions: <Widget>[
@@ -122,7 +124,7 @@ class Sell extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -133,10 +135,11 @@ class Sell extends StatelessWidget {
                 // Upload for every picture, as well as the other stuff
                 for (XFile file in imageFiles) {
                   await DbOperations.uploadListing(file, title, description, price);
+                  await fetchUserOrder();
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         );

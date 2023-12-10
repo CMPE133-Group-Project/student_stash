@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, library_private_types_in_public_api, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'login.dart';
 import 'db_operations.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -67,19 +71,19 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Change Password'),
+          title: const Text('Change Password'),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextFormField(
                   controller: currentPasswordController,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'Current Password'),
+                  decoration: const InputDecoration(labelText: 'Current Password'),
                 ),
                 TextFormField(
                   controller: newPasswordController,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'New Password'),
+                  decoration: const InputDecoration(labelText: 'New Password'),
                 ),
               ],
             ),
@@ -89,14 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
                 _changePassword();
                 Navigator.pop(context);
               },
-              child: Text('Change Password'),
+              child: const Text('Change Password'),
             ),
           ],
         );
@@ -128,9 +132,9 @@ class _ProfilePageState extends State<ProfilePage> {
         return AlertDialog(
           title: Row(
             children: [
-              Expanded(child: Text('Error')),
+              const Expanded(child: Text('Error')),
               IconButton(
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -149,14 +153,14 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Success'),
-          content: Text('Password changed successfully.'),
+          title: const Text('Success'),
+          content: const Text('Password changed successfully.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -170,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     setState(() {
       if (pickedFile != null) {
-        _imageFile = File(pickedFile.path!);
+        _imageFile = File(pickedFile.path);
       }
     });
   }
@@ -216,9 +220,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'assets/images/defaultAvatar.png'),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey[200],
@@ -226,25 +230,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: TextFormField(
                     controller: bioController,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18.0),
+                    style: const TextStyle(fontSize: 18.0),
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Write something about yourself...',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
-                SizedBox(height: 32.0),
+                const SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: _saveProfile,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.blue,
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
@@ -252,23 +256,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.red,
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Logout'),
+                  child: const Text('Logout'),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     _showChangePasswordDialog();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    textStyle: TextStyle(color: Colors.white),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.green,
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
-                  child: Text('Change Password'),
+                  child: const Text('Change Password'),
                 ),
               ],
             ),
