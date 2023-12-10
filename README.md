@@ -27,6 +27,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+In addition to setting an emulator for this project, we recommend following this video to ensure an emulator has been downloaded to run the project
+[Setup Flutter, Visual Studio Code and Android Emulator on Windows - 2021](https://docs.flutter.dev/cookbook](https://www.youtube.com/watch?v=-z1DcFsZlpc)
+
 # STEP 2
 
 Create a folder you would like to replicate the project into
