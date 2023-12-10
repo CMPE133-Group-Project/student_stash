@@ -5,7 +5,7 @@ import 'item_detail.dart';
 import 'item_edit.dart';
 import 'current_session.dart';
 
-GestureDetector item_listing(title, price, name, imgURL, desc, BuildContext context) {
+GestureDetector item_listing(title, price, name, imgURL, desc, id, BuildContext context) {
 
     // see user taps and open up new page with listing details
   return GestureDetector (
