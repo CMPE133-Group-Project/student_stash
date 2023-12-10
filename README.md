@@ -60,7 +60,7 @@ cd Full_Path_Name
 
 Run the command 
 
-git <Paste your path directory here>
+git "Paste your path directory here"
 
 # STEP 5
 
