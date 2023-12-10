@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'dart:io';
 
-
+// app bar used in some places, main app bar with roboto font and STUDENT STASH logo
 PreferredSizeWidget myAppBar(BuildContext context) {
   return AppBar(
     title: const Text(

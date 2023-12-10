@@ -22,7 +22,7 @@ class ItemDetail extends StatelessWidget {
       required this.id});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // detailed page listing
     return Scaffold(
       appBar: myAppBar(context),
       body: ListView(
